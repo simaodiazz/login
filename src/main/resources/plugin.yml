@@ -1,0 +1,4 @@
+name: Login
+version: 1.0
+main: org.login.Main
+author: simaodiazz
