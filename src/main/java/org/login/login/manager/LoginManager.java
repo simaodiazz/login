@@ -5,7 +5,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.login.database.dao.UserDatabase;
 import org.login.login.Login;
-import org.login.login.action.LoginType;
 
 import java.util.HashMap;
 import java.util.Set;
@@ -41,13 +40,13 @@ public class LoginManager {
             player.sendMessage("");
             player.sendMessage(" §eDigite §7/login <senha> §epara iniciar sessão no servidor.");
             player.sendMessage("");
-            Login signin = new Login(player, LoginType.SIGN_IN, System.currentTimeMillis() + 60000L);
+            Login signin = new Login(player, System.currentTimeMillis() + 60000L);
             cache.put(player.getName(), signin);
         } else {
             player.sendMessage("");
             player.sendMessage(" §eDigite §7/registrar <senha> <senha> §epara criar uma sessão no servidor.");
             player.sendMessage("");
-            Login signup = new Login(player, LoginType.SIGN_UP, System.currentTimeMillis() + 60000L);
+            Login signup = new Login(player, System.currentTimeMillis() + 60000L);
             cache.put(player.getName(), signup);
         }
     }
