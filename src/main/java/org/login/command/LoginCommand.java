@@ -51,6 +51,7 @@ public class LoginCommand implements CommandExecutor {
 
             Main.getInstance().getLoginManager().remove(player);
             player.sendMessage("§aSessão iniciada.");
+            player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1f, 1f);
             return true;
         }
         return false;
