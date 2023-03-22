@@ -1,11 +1,12 @@
 package org.login.runnable;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.login.Main;
 import org.login.utils.ActionBar;
 
-public class UserAuthenticatingRunnable extends BukkitRunnable  {
+public class UserAuthenticatingRunnable extends BukkitRunnable {
 
     public UserAuthenticatingRunnable() {
         this.runTaskTimer(Main.getInstance(), 0L, 20L);
@@ -18,14 +19,16 @@ public class UserAuthenticatingRunnable extends BukkitRunnable  {
 
             Player player = Bukkit.getPlayer(playerName);
 
-            if (Main.getInstance().getLoginManager().get(playerName).getKickDelay() > System.currentTimeMillis()) {
+            if (Main.getInstance().getLoginManager().get(playerName).getTimeKick() > System.currentTimeMillis()) {
 
-                long time = (Main.getInstance().getLoginManager().get(playerName).getKickDelay() - System.currentTimeMillis()) / 1000;
+                long time = (Main.getInstance().getLoginManager().get(playerName).getTimeKick() - System.currentTimeMillis()) / 1000;
 
-                ActionBar.send(player, String.format("Você possui %s para iniciar sessão ou registrar.", time));
+                ActionBar.send(player, String.format("§cVocê possui %s segundos para iniciar sessão ou registrar.", time));
 
                 continue;
             }
+
+            Main.getInstance().getLoginManager().remove(player);
 
             player.kickPlayer("§cExcesso de tempo para iniciar sessão ou criar conta.");
         }

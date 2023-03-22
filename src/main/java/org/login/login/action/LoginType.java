@@ -1,4 +1,4 @@
-package org.login.model.login.action;
+package org.login.login.action;
 
 public enum LoginType {
 

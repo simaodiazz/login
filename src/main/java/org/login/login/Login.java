@@ -1,15 +1,15 @@
-package org.login.model.login;
+package org.login.login;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.login.model.login.action.LoginType;
-import org.login.model.user.User;
+import org.bukkit.entity.Player;
+import org.login.login.action.LoginType;
 
 @AllArgsConstructor
 @Data
 public class Login {
 
-    private User user;
+    private Player user;
     private LoginType loginType;
     private long timeKick;
 

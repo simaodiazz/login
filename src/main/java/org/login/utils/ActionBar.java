@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 public class ActionBar {
 
-    public void send(Player player, String message){
+    public static void send(Player player, String message){
         PacketPlayOutChat packet = new PacketPlayOutChat(new ChatComponentText(message), (byte)2);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
     }

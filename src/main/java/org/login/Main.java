@@ -5,10 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
+import org.login.command.LoginCommand;
+import org.login.command.RegisterCommand;
 import org.login.database.SQLProvider;
-import org.login.model.login.manager.LoginManager;
-import org.login.model.user.manager.UserManager;
+import org.login.listeners.PlayerJoinListener;
+import org.login.listeners.PlayerMoveListener;
+import org.login.login.manager.LoginManager;
 import org.login.runnable.UserAuthenticatingRunnable;
 
 public class Main extends JavaPlugin {
@@ -24,10 +26,7 @@ public class Main extends JavaPlugin {
     private LoginManager loginManager;
 
     @Getter
-    private UserManager userManager;
-
-    @Getter
-    private BukkitTask userAuthenticatingRunnable;
+    private UserAuthenticatingRunnable userAuthenticatingRunnable;
 
     @Override
     public void onLoad() {
@@ -39,14 +38,22 @@ public class Main extends JavaPlugin {
         sqlProvider.setup(this);
         // Load all managers
         loginManager = new LoginManager();
-        userManager = new UserManager();
-        // Load runnable
-        userAuthenticatingRunnable = new UserAuthenticatingRunnable().runTaskTimer(this, 0L, 20L);
+        // Make all players in server login again
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            loginManager.add(player);
+        });
     }
 
     @Override
     public void onEnable() {
-
+        // Load runnable
+        userAuthenticatingRunnable = new UserAuthenticatingRunnable();
+        // Register listeners
+        new PlayerJoinListener(this);
+        new PlayerMoveListener(this);
+        // Register commands
+        new RegisterCommand(this);
+        new LoginCommand(this);
     }
 
     @Override
